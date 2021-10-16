@@ -1,29 +1,37 @@
-const canvas = document.getElementById("canvas");
+const canvas = document.querySelector("#canvas");
 
 canvas.width = document.documentElement.clientWidth
 canvas.height = document.documentElement.clientHeight
 
-let drawing = false
 
 const context = canvas.getContext("2d")
 context.fillStyle = "black"
 
-canvas.onmousedown = e => {
-  drawing = true
-  context.beginPath()
-  context.arc(e.clientX, e.clientY, 10, 0, 2 * Math.PI)
-  context.stroke()
-  context.fill()
-}
-canvas.onmousemove = e => {
-  if(drawing){
+let drawing = false
+
+const isTouchDevice = 'ontouchstart' in document.documentElement
+if(isTouchDevice){
+  
+} else {
+  canvas.onmousedown = e => {
+    drawing = true
     context.beginPath()
     context.arc(e.clientX, e.clientY, 10, 0, 2 * Math.PI)
     context.stroke()
     context.fill()
   }
+  canvas.onmousemove = e => {
+    if(drawing){
+      context.beginPath()
+      context.arc(e.clientX, e.clientY, 10, 0, 2 * Math.PI)
+      context.stroke()
+      context.fill()
+    }
+  }
+  canvas.onmouseup = () => {
+    drawing = false
+  }
+  
 }
-canvas.onmouseup = () => {
-  drawing = false
-}
+
 
