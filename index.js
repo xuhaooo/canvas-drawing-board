@@ -5,16 +5,22 @@ canvas.height = document.documentElement.clientHeight
 
 let drawing = false
 
-const context = canvas.getContext("2d");
-context.fillStyle = "pink";
+const context = canvas.getContext("2d")
+context.fillStyle = "black"
 
 canvas.onmousedown = e => {
   drawing = true
-  context.fillRect (e.clientX-5, e.clientY-5, 10, 10);
+  context.beginPath()
+  context.arc(e.clientX, e.clientY, 10, 0, 2 * Math.PI)
+  context.stroke()
+  context.fill()
 }
 canvas.onmousemove = e => {
   if(drawing){
-    context.fillRect (e.clientX-5, e.clientY-5, 10, 10);
+    context.beginPath()
+    context.arc(e.clientX, e.clientY, 10, 0, 2 * Math.PI)
+    context.stroke()
+    context.fill()
   }
 }
 canvas.onmouseup = () => {
