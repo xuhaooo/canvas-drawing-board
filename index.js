@@ -1,13 +1,13 @@
-canvas.onmousedown = e => {
-  const div = document.createElement('div')
-  div.style.position = 'absolute'
-  div.style.left = e.clientX + 'px'
-  div.style.top = e.clientY + 'px'
-  div.style.width = '6px'
-  div.style.height = '6px'
-  div.style.marginLeft = '-3px'
-  div.style.marginTop = '-3px'
-  div.style.borderRadius = '50%'
-  div.style.background = 'black'
-  canvas.appendChild(div)
+const canvas = document.getElementById("canvas");
+
+canvas.width = document.documentElement.clientWidth
+canvas.height = document.documentElement.clientHeight
+
+const context = canvas.getContext("2d");
+context.fillStyle = "pink";
+
+canvas.onmousemove = e => {
+  context.fillRect (e.clientX-5, e.clientY-5, 10, 10);
 }
+
+
