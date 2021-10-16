@@ -4,7 +4,6 @@
   box-sizing: border-box;
 }
 #canvas {
-  background: green;
   height: 100vh;
   position: relative;
 }
