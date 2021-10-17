@@ -8,8 +8,17 @@
   display: block;
   position: relative;
 }
-button {
+.actions {
   position: fixed;
   left: 0;
   top: 0;
+}
+.actions > #brush {
+  display: none;
+}
+.actions.active > #brush {
+  display: inline-block;
+}
+.actions.active > #eraser {
+  display: none;
 }

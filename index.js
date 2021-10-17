@@ -1,17 +1,31 @@
-const canvas = document.querySelector("#canvas");
+let myCanvas = document.querySelector("#canvas");
+let actions = document.querySelector('.actions')
+let eraser = document.querySelector("#eraser");
+let brush = document.querySelector("#brush");
+let context = myCanvas.getContext("2d")
+let using = false
+let eraserEnabled = false
+let last = null
 
-minmax()
-window.onresize = () => {
-  minmax()
+autoSetCanvasSize(myCanvas)
+
+let isTouchDevice = 'ontouchstart' in document.documentElement
+if(isTouchDevice){
+  listenToTouch(myCanvas)
+} else {
+  listenToMouse(myCanvas)
 }
 
-const context = canvas.getContext("2d")
+eraser.onclick = () => {
+  eraserEnabled = true
+  actions.className = 'actions active'
+}
+brush.onclick = () => {
+  eraserEnabled = false
+  actions.className = 'actions'
+}
 
-let using = false
-let last
-
-const isTouchDevice = 'ontouchstart' in document.documentElement
-if(isTouchDevice){
+function listenToTouch(canvas){
   canvas.ontouchstart = e => {
     let x = e.touches[0].clientX
     let y = e.touches[0].clientY
@@ -23,26 +37,24 @@ if(isTouchDevice){
     drawLine(last[0], last[1], x, y)
     last = [x, y]
   }
-} else {
+}
+
+function listenToMouse(canvas){
   canvas.onmousedown = e => {
+    using = true
     if(eraserEnabled){
-      using = true
       context.clearRect(e.clientX-15, e.clientY-15, 30, 30)
     } else {
-      using = true
       last = [e.clientX, e.clientY]
     }
   }
   canvas.onmousemove = e => {
+    if(!using){ return }
     if(eraserEnabled){
-      if(using){
-        context.clearRect(e.clientX-15, e.clientY-15, 30, 30)
-      }
+      context.clearRect(e.clientX-15, e.clientY-15, 30, 30)
     } else {
-      if(using){
-        drawLine(last[0], last[1], e.clientX, e.clientY)
-        last = [e.clientX, e.clientY]
-      }
+      drawLine(last[0], last[1], e.clientX, e.clientY)
+      last = [e.clientX, e.clientY]
     }
   }
   canvas.onmouseup = () => {
@@ -50,6 +62,17 @@ if(isTouchDevice){
   }
 }
 
+
+function autoSetCanvasSize(canvas){
+  setCanvasSize()
+  window.onresize = () => {
+    setCanvasSize()
+  }
+  function setCanvasSize(){
+    canvas.width = document.documentElement.clientWidth
+    canvas.height = document.documentElement.clientHeight
+  }
+}
 
 function drawLine(x1, y1, x2, y2) {
   context.beginPath()
@@ -59,15 +82,4 @@ function drawLine(x1, y1, x2, y2) {
   context.lineCap = 'round'
   context.lineTo(x2, y2)
   context.stroke()
-}
-
-function minmax(){
-  canvas.width = document.documentElement.clientWidth
-  canvas.height = document.documentElement.clientHeight
-}
-
-
-let eraserEnabled = false
-eraser.onclick = () => {
-  eraserEnabled = !eraserEnabled
 }
