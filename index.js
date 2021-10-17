@@ -7,7 +7,7 @@ window.onresize = () => {
 
 const context = canvas.getContext("2d")
 
-let drawing = false
+let using = false
 let last
 
 const isTouchDevice = 'ontouchstart' in document.documentElement
@@ -25,17 +25,28 @@ if(isTouchDevice){
   }
 } else {
   canvas.onmousedown = e => {
-    drawing = true
-    last = [e.clientX, e.clientY]
-  }
-  canvas.onmousemove = e => {
-    if(drawing){
-      drawLine(last[0], last[1], e.clientX, e.clientY)
+    if(eraserEnabled){
+      using = true
+      context.clearRect(e.clientX-15, e.clientY-15, 30, 30)
+    } else {
+      using = true
       last = [e.clientX, e.clientY]
     }
   }
+  canvas.onmousemove = e => {
+    if(eraserEnabled){
+      if(using){
+        context.clearRect(e.clientX-15, e.clientY-15, 30, 30)
+      }
+    } else {
+      if(using){
+        drawLine(last[0], last[1], e.clientX, e.clientY)
+        last = [e.clientX, e.clientY]
+      }
+    }
+  }
   canvas.onmouseup = () => {
-    drawing = false
+    using = false
   }
 }
 
@@ -53,4 +64,10 @@ function drawLine(x1, y1, x2, y2) {
 function minmax(){
   canvas.width = document.documentElement.clientWidth
   canvas.height = document.documentElement.clientHeight
+}
+
+
+let eraserEnabled = false
+eraser.onclick = () => {
+  eraserEnabled = !eraserEnabled
 }

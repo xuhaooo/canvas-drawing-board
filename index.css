@@ -8,3 +8,8 @@
   display: block;
   position: relative;
 }
+button {
+  position: fixed;
+  left: 0;
+  top: 0;
+}
