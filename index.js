@@ -1,13 +1,11 @@
 const canvas = document.querySelector("#canvas");
 
-canvas.width = document.documentElement.clientWidth
-canvas.height = document.documentElement.clientHeight
+minmax()
+window.onresize = () => {
+  minmax()
+}
 
 const context = canvas.getContext("2d")
-context.fillStyle = "black"
-context.strokeStyle = 'none'
-context.lineWidth = 8
-context.lineCap = 'round'
 
 let drawing = false
 let last
@@ -39,13 +37,20 @@ if(isTouchDevice){
   canvas.onmouseup = () => {
     drawing = false
   }
-  
 }
 
 
 function drawLine(x1, y1, x2, y2) {
   context.beginPath()
   context.moveTo(x1, y1)
+  context.fillStyle = "black"
+  context.lineWidth = 8
+  context.lineCap = 'round'
   context.lineTo(x2, y2)
   context.stroke()
+}
+
+function minmax(){
+  canvas.width = document.documentElement.clientWidth
+  canvas.height = document.documentElement.clientHeight
 }

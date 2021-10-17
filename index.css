@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 #canvas {
+  background: green;
   display: block;
   position: relative;
 }
