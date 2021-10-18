@@ -27,15 +27,28 @@ brush.onclick = () => {
 
 function listenToTouch(canvas){
   canvas.ontouchstart = e => {
+    using = true
     let x = e.touches[0].clientX
     let y = e.touches[0].clientY
-    last = [x, y]
+    if(eraserEnabled){
+      context.clearRect(x-15, y-15, 30, 30)
+    }else{
+      last = [x, y]
+    }
   }
   canvas.ontouchmove = e => {
     let x = e.touches[0].clientX
     let y = e.touches[0].clientY
-    drawLine(last[0], last[1], x, y)
-    last = [x, y]
+    if(!using){ return }
+    if(eraserEnabled){
+      context.clearRect(x-15, y-15, 30, 30)
+    } else {
+      drawLine(last[0], last[1], x, y)
+      last = [x, y]
+    }
+  }
+  canvas.ontouchend = () => {
+    using = false
   }
 }
 
