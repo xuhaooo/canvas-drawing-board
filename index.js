@@ -6,6 +6,7 @@ let context = myCanvas.getContext("2d")
 let using = false
 let eraserEnabled = false
 let last = null
+let lineWidth = 5
 
 autoSetCanvasSize(myCanvas)
 
@@ -26,26 +27,58 @@ eraser.onclick = () => {
   eraser.classList.add('active')
   pencil.classList.remove('active')
 }
+trash.onclick = () => {
+  context.clearRect(0, 0, myCanvas.width, myCanvas.height)
+}
+download.onclick = () => {
+  let url = myCanvas.toDataURL('image/png')
+  let a = document.createElement('a')
+  document.body.appendChild(a)
+  a.href = url
+  a.download = '我的画儿'
+  a.target = '_blank'
+  a.click()
+}
 
+black.onclick = () => {
+  context.strokeStyle = "black"
+  black.classList.add('active')
+  red.classList.remove('active')
+  yellow.classList.remove('active')
+  blue.classList.remove('active')
+}
 red.onclick = () => {
   context.strokeStyle = "red"
+  black.classList.remove('active')
   red.classList.add('active')
   yellow.classList.remove('active')
   blue.classList.remove('active')
 }
 yellow.onclick = () => {
   context.strokeStyle = "yellow"
-  yellow.classList.add('active')
+  black.classList.remove('active')
   red.classList.remove('active')
+  yellow.classList.add('active')
   blue.classList.remove('active')
 }
 blue.onclick = () => {
   context.strokeStyle = "blue"
-  blue.classList.add('active')
+  black.classList.remove('active')
   red.classList.remove('active')
   yellow.classList.remove('active')
+  blue.classList.add('active')
 }
 
+thin.onclick = () => {
+  lineWidth = 5
+  thin.classList.add('active')
+  thick.classList.remove('active')
+}
+thick.onclick = () => {
+  lineWidth = 10
+  thin.classList.remove('active')
+  thick.classList.add('active')
+}
 
 function listenToTouch(canvas){
   canvas.ontouchstart = e => {
@@ -112,9 +145,8 @@ function autoSetCanvasSize(canvas){
 function drawLine(x1, y1, x2, y2) {
   context.beginPath()
   context.moveTo(x1, y1)
-  context.lineWidth = 8
+  context.lineWidth = lineWidth
   context.lineCap = 'round'
   context.lineTo(x2, y2)
   context.stroke()
 }
-
