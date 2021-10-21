@@ -3,8 +3,19 @@
   padding: 0;
   box-sizing: border-box;
 }
+body {
+  overflow: hidden;
+}
+ul,ol {
+  list-style: none;
+}
+.icon {
+  width: 1em; height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
 #canvas {
-  background: green;
   display: block;
   position: relative;
 }
@@ -12,13 +23,41 @@
   position: fixed;
   left: 0;
   top: 0;
+  padding: 20px;
 }
-.actions > #brush {
-  display: none;
+.actions > svg {
+  width: 1.5em;
+  height: 1.5em;
+  margin: 0 5px;
 }
-.actions.active > #brush {
-  display: inline-block;
+.actions > svg.active {
+  fill: red;
+  transform: scale(1.2);
+  transition: all 0.3s;
 }
-.actions.active > #eraser {
-  display: none;
+.colors {
+  position: fixed;
+  top: 60px;
+  left: 25px;
+}
+.colors > li {
+  width: 20px;
+  height: 20px;
+  margin: 10px 0;
+  border-radius: 50%;
+  box-shadow: 0 0 3px rgba(0,0,0,0.25);
+  transition: all 0.3s;
+}
+.colors > li.red {
+  background: red;
+}
+.colors > li.yellow {
+  background: yellow;
+}
+.colors > li.blue {
+  background: blue;
+}
+.colors > li.active {
+  box-shadow: 0 0 3px rgba(0,0,0,0.95);
+  transform: scale(1.2);
 }

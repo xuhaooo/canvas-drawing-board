@@ -16,14 +16,36 @@ if(isTouchDevice){
   listenToMouse(myCanvas)
 }
 
+pencil.onclick = () => {
+  eraserEnabled = false
+  pencil.classList.add('active')
+  eraser.classList.remove('active')
+}
 eraser.onclick = () => {
   eraserEnabled = true
-  actions.className = 'actions active'
+  eraser.classList.add('active')
+  pencil.classList.remove('active')
 }
-brush.onclick = () => {
-  eraserEnabled = false
-  actions.className = 'actions'
+
+red.onclick = () => {
+  context.strokeStyle = "red"
+  red.classList.add('active')
+  yellow.classList.remove('active')
+  blue.classList.remove('active')
 }
+yellow.onclick = () => {
+  context.strokeStyle = "yellow"
+  yellow.classList.add('active')
+  red.classList.remove('active')
+  blue.classList.remove('active')
+}
+blue.onclick = () => {
+  context.strokeStyle = "blue"
+  blue.classList.add('active')
+  red.classList.remove('active')
+  yellow.classList.remove('active')
+}
+
 
 function listenToTouch(canvas){
   canvas.ontouchstart = e => {
@@ -90,9 +112,9 @@ function autoSetCanvasSize(canvas){
 function drawLine(x1, y1, x2, y2) {
   context.beginPath()
   context.moveTo(x1, y1)
-  context.fillStyle = "black"
   context.lineWidth = 8
   context.lineCap = 'round'
   context.lineTo(x2, y2)
   context.stroke()
 }
+
