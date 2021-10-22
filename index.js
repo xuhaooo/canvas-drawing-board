@@ -35,49 +35,82 @@ download.onclick = () => {
   let a = document.createElement('a')
   document.body.appendChild(a)
   a.href = url
-  a.download = '我的画儿'
+  a.download = '画作'
   a.target = '_blank'
   a.click()
 }
 
+document.addEventListener('click', e => {
+  if(e.target !== thickness){
+    thicks.classList.remove('active')
+  }
+})
+thickness.onclick = () => {
+  thicks.classList.add('active')
+}
+thick1.onclick = () => {
+  lineWidth = 3
+  thick1.classList.add('active')
+  findSibling(thick1).map(item => item.classList.remove('active'))
+}
+thick2.onclick = () => {
+  lineWidth = 8
+  thick2.classList.remove('active')
+  findSibling(thick2).map(item => item.classList.remove('active'))
+}
+thick3.onclick = () => {
+  lineWidth = 15
+  thick3.classList.add('active')
+  findSibling(thick3).map(item => item.classList.remove('active'))
+}
+
+document.onclick = e => {
+  if(e.target !== color){
+    colors.classList.remove('active')
+  }
+}
+color.onclick = () => {
+  colors.classList.add('active')
+}
 black.onclick = () => {
   context.strokeStyle = "black"
   black.classList.add('active')
-  red.classList.remove('active')
-  yellow.classList.remove('active')
-  blue.classList.remove('active')
+  findSibling(black).map(item=>item.classList.remove('active'))
 }
 red.onclick = () => {
   context.strokeStyle = "red"
-  black.classList.remove('active')
   red.classList.add('active')
-  yellow.classList.remove('active')
-  blue.classList.remove('active')
+  findSibling(red).map(item=>item.classList.remove('active'))
+}
+orange.onclick = () => {
+  context.strokeStyle = "orange"
+  orange.classList.add('active')
+  findSibling(orange).map(item=>item.classList.remove('active'))
 }
 yellow.onclick = () => {
   context.strokeStyle = "yellow"
-  black.classList.remove('active')
-  red.classList.remove('active')
   yellow.classList.add('active')
-  blue.classList.remove('active')
+  findSibling(yellow).map(item=>item.classList.remove('active'))
+}
+green.onclick = () => {
+  context.strokeStyle = "green"
+  green.classList.add('active')
+  findSibling(green).map(item=>item.classList.remove('active'))
+}
+cyan.onclick = () => {
+  context.strokeStyle = "cyan"
+  cyan.classList.add('active')
+  findSibling(cyan).map(item=>item.classList.remove('active'))
 }
 blue.onclick = () => {
   context.strokeStyle = "blue"
-  black.classList.remove('active')
-  red.classList.remove('active')
-  yellow.classList.remove('active')
   blue.classList.add('active')
+  findSibling(blue).map(item=>item.classList.remove('active'))
 }
-
-thin.onclick = () => {
-  lineWidth = 5
-  thin.classList.add('active')
-  thick.classList.remove('active')
-}
-thick.onclick = () => {
-  lineWidth = 10
-  thin.classList.remove('active')
-  thick.classList.add('active')
+purple.onclick = () => {
+  context.strokeStyle = "purple"
+  purple.classList.add('active')
+  findSibling(purple).map(item=>item.classList.remove('active'))
 }
 
 function listenToTouch(canvas){
@@ -149,4 +182,17 @@ function drawLine(x1, y1, x2, y2) {
   context.lineCap = 'round'
   context.lineTo(x2, y2)
   context.stroke()
+}
+
+function findSibling(tag) {
+  let parent = tag.parentNode
+  let children = parent.children
+  let siblings = []
+  for(let i=0; i<=children.length-1;i++){
+    if(children[i]===tag){
+      continue
+    }
+    siblings[siblings.length] = children[i]
+  }
+  return siblings
 }
